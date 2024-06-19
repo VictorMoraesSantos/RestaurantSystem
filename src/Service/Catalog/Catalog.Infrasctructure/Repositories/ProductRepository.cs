@@ -1,13 +1,13 @@
-﻿using Catalog.Domain.Models;
+﻿using Catalog.Domain.Interfaces;
+using Catalog.Domain.Entities;
 using Catalog.Infrasctructure.Data;
-using Catalog.Infrasctructure.Repository.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.Infrasctructure.Repository
 {
     public class ProductRepository : IProductRepository
     {
-        private readonly ApplicationDbContext? _context;
+        private readonly ApplicationDbContext _context;
 
         public ProductRepository(ApplicationDbContext? context)
         {
@@ -25,26 +25,36 @@ namespace Catalog.Infrasctructure.Repository
             return products;
         }
 
-        public Task<Product> GetProductAsync(Guid Id)
+        public async Task<Product> GetProductAsync(Guid Id)
         {
-            throw new NotImplementedException();
+            var product = await _context.Products.FirstOrDefaultAsync(p => p.Id == Id);
+            return product!;
         }
 
-        public Task<Product> PostProductAsync(Product product)
+        public async Task<Product> CreateProductAsync(Product product)
         {
-            throw new NotImplementedException();
+            _context.AddAsync(product);
+            await _context.SaveChangesAsync();
+            return product;
         }
 
-        public Task<Product> UpdateProductAsync(Product product)
+        public async Task<Product> UpdateProductAsync(Product product)
         {
-            throw new NotImplementedException();
+            _context.Update(product);
+            await _context.SaveChangesAsync();
+            return product;
         }
 
-        public Task<bool> DeleteProductAsync(Guid Id)
+        public async Task<bool> DeleteProductAsync(Guid Id)
         {
-            throw new NotImplementedException();
+            var product = _context.Products.FirstOrDefault(p => p.Id == Id);
+            if (product is not null)
+            {
+                _context.Remove(product);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
         }
-
-
     }
 }

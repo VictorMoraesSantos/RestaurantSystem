@@ -7,16 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Category\Commands\" />
-    <Folder Include="Category\Queries\" />
+    <Folder Include="Handlers\Categories\" />
     <Folder Include="Exceptions\" />
-    <Folder Include="Product\Commands\" />
-    <Folder Include="Product\" />
-    <Folder Include="Product\Queries\" />
+    <Folder Include="Queries\Categories\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="MediatR" Version="12.3.0" />
   </ItemGroup>
 
   <ItemGroup>
