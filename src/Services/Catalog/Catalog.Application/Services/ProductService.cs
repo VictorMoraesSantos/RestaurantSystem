@@ -33,26 +33,34 @@ namespace Catalog.Application.Services
         {
             var products = await _productRepository.GetProductsByCategory(category);
             var productsDTO = ProductMapper.DomainToDto(products);
+            return productsDTO;
         }
 
-        public Task<IEnumerable<ProductDTO>> GetAll()
+        public async Task<IEnumerable<ProductDTO>> GetAll()
         {
-            throw new NotImplementedException();
+            var products = await _productRepository.GetAllAsync();
+            var productsDTO = ProductMapper.DomainToDto(products);
+            return productsDTO;
         }
 
-        public Task<ProductDTO> Create(ProductDTO entity)
+        public async Task<ProductDTO> Create(ProductDTO entity)
         {
-            throw new NotImplementedException();
+            var product = ProductMapper.DtoToDomain(entity)
+            await _productRepository.CreateAsync(product);
+            return entity;
         }
 
-        public Task<ProductDTO> Update(ProductDTO entity)
+        public async Task<ProductDTO> Update(ProductDTO entity)
         {
-            throw new NotImplementedException();
+            var product = ProductMapper.DtoToDomain(entity);
+            await _productRepository.UpdateAsync(product);
+            return entity;
         }
 
-        public Task<bool> Delete(Product product)
+        public Task<bool> Delete(ProductDTO entity)
         {
-            throw new NotImplementedException();
+            var product = ProductMapper.DtoToDomain(entity);
+            return _productRepository.DeleteAsync(product);
         }
     }
 }
