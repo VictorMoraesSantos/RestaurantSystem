@@ -23,7 +23,7 @@ namespace Catalog.Infra.Data.Repositories
         public async Task<Product> GetProductByName(string productName)
         {
             return await _context.Products.AsNoTracking()
-                                          .FirstAsync(p => p.Name == productName);
+                                          .FirstOrDefaultAsync(p => p.Name == productName);
         }
 
         public async Task<IEnumerable<Product>> GetProductsByCategory(Guid categoryId)

@@ -16,7 +16,7 @@ namespace Catalog.API.Controllers
         }
 
         [HttpGet("{id:guid}", Name = "GetCategoryById")]
-        public async Task<ActionResult<CategoryDTO>> GetCategory(Guid id)
+        public async Task<ActionResult<CategoryDTO>> GetCategoryById(Guid id)
         {
             var category = await _categoryService.GetById(id);
             if (category == null)
@@ -25,8 +25,8 @@ namespace Catalog.API.Controllers
             return Ok(category);
         }
 
-        [HttpGet("{name}", Name = "GetCategoryByName")]
-        public async Task<ActionResult<CategoryDTO>> GetCategory(string name)
+        [HttpGet("byname/{name}", Name = "GetCategoryByName")]
+        public async Task<ActionResult<CategoryDTO>> GetCategoryByName(string name)
         {
             var category = await _categoryService.GetByName(name);
             if (category == null)
@@ -35,7 +35,7 @@ namespace Catalog.API.Controllers
             return Ok(category);
         }
 
-        [HttpGet]
+        [HttpGet("all")]
         public async Task<ActionResult<IEnumerable<CategoryDTO>>> GetCategories()
         {
             var categories = await _categoryService.GetAll();
@@ -46,11 +46,11 @@ namespace Catalog.API.Controllers
         public async Task<ActionResult<CategoryDTO>> CreateCategory(CategoryDTO category)
         {
             var createdCategory = await _categoryService.Create(category);
-            return CreatedAtRoute("GetCategoryById", new { id = createdCategory.Id }, createdCategory); // Corrigido
+            return CreatedAtRoute("GetCategoryById", new { id = createdCategory.Id }, createdCategory);
         }
 
-        [HttpPut("{id}", Name = "UpdateCategory")]
-        public async Task<ActionResult<CategoryDTO>> UpdateCategory(Guid id, CategoryDTO category)
+        [HttpPut("{id:guid}", Name = "UpdateCategory")]
+        public async Task<ActionResult> UpdateCategory(Guid id, CategoryDTO category)
         {
             if (id != category.Id)
                 return BadRequest("Category ID mismatch");
@@ -63,7 +63,7 @@ namespace Catalog.API.Controllers
             return NoContent();
         }
 
-        [HttpDelete("{id}", Name = "DeleteCategory")]
+        [HttpDelete("{id:guid}", Name = "DeleteCategory")]
         public async Task<IActionResult> DeleteCategory(Guid id)
         {
             var category = await _categoryService.GetById(id);
