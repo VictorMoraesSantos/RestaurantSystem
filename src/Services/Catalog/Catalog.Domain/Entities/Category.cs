@@ -22,6 +22,14 @@ namespace Catalog.Domain.Entities
             Description = description;
         }
 
+        public Category(Guid id, string name, string description)
+        {
+            Validate(name, description);
+            Id = id;
+            Name = name;
+            Description = description;
+        }
+
         public void Update(string name, string description)
         {
             Validate(name, description);
@@ -33,8 +41,17 @@ namespace Catalog.Domain.Entities
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new DomainException("Name cannot be empty.");
+            if (name.Length < 3)
+                throw new DomainException("Name must have at least 3 characters.");
+            if (name.Length > 100)
+                throw new DomainException("Name must not exceed 100 characters.");
+
             if (string.IsNullOrWhiteSpace(description))
                 throw new DomainException("Description cannot be empty.");
+            if (description.Length < 3)
+                throw new DomainException("Description must have at least 3 characters.");
+            if (description.Length > 100)
+                throw new DomainException("Description must not exceed 100 characters.");
         }
     }
 }

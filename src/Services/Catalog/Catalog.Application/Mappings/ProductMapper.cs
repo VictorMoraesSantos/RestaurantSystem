@@ -13,10 +13,11 @@ namespace Catalog.Application.Mappings
         public static ProductDTO DomainToDto(Product product)
         {
             return new ProductDTO(
+                product.Id,
                 product.Name,
                 product.Description,
                 product.Price,
-                CategoryMapper.DomainToDto(product.Category),
+                product.CategoryId,
                 product.Quantity,
                 product.Status,
                 product.ImageFile
@@ -26,10 +27,11 @@ namespace Catalog.Application.Mappings
         public static Product DtoToDomain(ProductDTO productDTO)
         {
             return new Product(
+                productDTO.Id,
                 productDTO.Name,
                 productDTO.Description,
                 productDTO.Price,
-                CategoryMapper.DtoToDomain(productDTO.Category),
+                productDTO.CategoryId,
                 productDTO.Quantity,
                 productDTO.Status,
                 productDTO.ImageFile

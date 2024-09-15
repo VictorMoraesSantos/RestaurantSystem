@@ -1,7 +1,6 @@
-﻿using Catalog.Domain.Entities;
-using Catalog.Domain.Enums;
+﻿using Catalog.Domain.Enums;
 
 namespace Catalog.Application.DTOs
 {
-    public record ProductDTO(string Name, string Description, decimal Price, Category Category, int Quantity, ProductStatus Status, string ImageFile);
+    public record ProductDTO(Guid Id, string Name, string Description, decimal Price, Guid CategoryId, int Quantity, ProductStatus Status, string ImageFile);
 }

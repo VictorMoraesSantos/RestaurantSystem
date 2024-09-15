@@ -22,6 +22,13 @@ namespace Catalog.Application.Services
             return categoryDTO;
         }
 
+        public async Task<CategoryDTO> GetByName(string name)
+        {
+            var category = await _categoryRepository.GetByNameAsync(name);
+            var categoryDTO = CategoryMapper.DomainToDto(category);
+            return categoryDTO;
+        }
+
         public async Task<IEnumerable<CategoryDTO>> GetAll()
         {
             var categories = await _categoryRepository.GetAllAsync();

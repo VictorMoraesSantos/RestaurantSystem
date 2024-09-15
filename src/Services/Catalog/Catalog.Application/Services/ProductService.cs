@@ -29,9 +29,9 @@ namespace Catalog.Application.Services
             return productDTO;
         }
 
-        public async Task<IEnumerable<ProductDTO>> GetProductByCategory(CategoryDTO category)
+        public async Task<IEnumerable<ProductDTO>> GetProductsByCategory(Guid categoryId)
         {
-            var products = await _productRepository.GetProductsByCategory(category);
+            var products = await _productRepository.GetProductsByCategory(categoryId);
             var productsDTO = ProductMapper.DomainToDto(products);
             return productsDTO;
         }
@@ -45,7 +45,7 @@ namespace Catalog.Application.Services
 
         public async Task<ProductDTO> Create(ProductDTO entity)
         {
-            var product = ProductMapper.DtoToDomain(entity)
+            var product = ProductMapper.DtoToDomain(entity);
             await _productRepository.CreateAsync(product);
             return entity;
         }

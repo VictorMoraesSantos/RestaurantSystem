@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Catalog.Infra.Data.Repositories
 {
-    class CategoryRepository : ICategoryRepository
+    public class CategoryRepository : ICategoryRepository
     {
         private readonly ApplicationDbContext _context;
 
@@ -18,6 +18,12 @@ namespace Catalog.Infra.Data.Repositories
         {
             return await _context.Categories.AsNoTracking()
                                             .FirstAsync(p => p.Id == id);
+        }
+
+        public async Task<Category> GetByNameAsync(string name)
+        {
+            return await _context.Categories.AsNoTracking()
+                                            .FirstOrDefaultAsync(p => p.Name == name);
         }
 
         public async Task<IEnumerable<Category>> GetAllAsync()

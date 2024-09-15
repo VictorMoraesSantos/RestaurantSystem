@@ -7,12 +7,12 @@ namespace Catalog.Application.Mappings
     {
         public static CategoryDTO DomainToDto(Category category)
         {
-            return new CategoryDTO(category.Name, category.Description);
+            return new CategoryDTO(category.Id, category.Name, category.Description);
         }
 
         public static Category DtoToDomain(CategoryDTO categoryDTO)
         {
-            return new Category(categoryDTO.Name, categoryDTO.Description);
+            return new Category(categoryDTO.Id, categoryDTO.Name, categoryDTO.Description);
         }
 
         public static IEnumerable<CategoryDTO> DomainToDto(IEnumerable<Category> categories)

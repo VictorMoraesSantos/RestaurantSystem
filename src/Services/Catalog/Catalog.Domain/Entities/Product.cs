@@ -20,6 +20,8 @@ namespace Catalog.Domain.Entities
         public decimal Price { get; private set; }
 
         [Required(ErrorMessage = "The Category is required")]
+        public Guid CategoryId { get; private set; }
+
         public Category Category { get; private set; }
 
         [Required(ErrorMessage = "The Quantity is required")]
@@ -32,31 +34,31 @@ namespace Catalog.Domain.Entities
         [MaxLength(250, ErrorMessage = "The ImageFile must not exceed 250 characters")]
         public string ImageFile { get; private set; }
 
-        public Product(string name, string description, decimal price, Category category, int quantity, ProductStatus status, string imageFile)
+        public Product(Guid id, string name, string description, decimal price, Guid categoryId, int quantity, ProductStatus status, string imageFile)
         {
-            Validate(name, description, price, category, quantity, imageFile);
+            Validate(name, description, price, quantity, imageFile);
+            Id = id;
             Name = name;
             Description = description;
             Price = price;
-            Category = category;
+            CategoryId = categoryId;
             Quantity = quantity;
             Status = status;
             ImageFile = imageFile;
         }
 
-        public void Update(string name, string description, decimal price, Category category, int quantity, ProductStatus status, string imageFile)
+        public void Update(string name, string description, decimal price, int quantity, ProductStatus status, string imageFile)
         {
-            Validate(name, description, price, category, quantity, imageFile);
+            Validate(name, description, price, quantity, imageFile);
             Name = name;
             Description = description;
             Price = price;
-            Category = category;
             Quantity = quantity;
             Status = status;
             ImageFile = imageFile;
         }
 
-        private void Validate(string name, string description, decimal price, Category category, int quantity, string imageFile)
+        private void Validate(string name, string description, decimal price, int quantity, string imageFile)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new DomainException("Name cannot be empty.");
@@ -64,8 +66,6 @@ namespace Catalog.Domain.Entities
                 throw new DomainException("Description cannot be empty.");
             if (price <= 0)
                 throw new DomainException("Price must be greater than zero.");
-            if (category == null)
-                throw new DomainException("Category cannot be null.");
             if (quantity <= 0)
                 throw new DomainException("Quantity must be greater than zero.");
             if (string.IsNullOrWhiteSpace(imageFile))

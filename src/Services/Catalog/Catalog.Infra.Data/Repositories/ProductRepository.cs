@@ -26,10 +26,10 @@ namespace Catalog.Infra.Data.Repositories
                                           .FirstAsync(p => p.Name == productName);
         }
 
-        public async Task<IEnumerable<Product>> GetProductsByCategory(Category category)
+        public async Task<IEnumerable<Product>> GetProductsByCategory(Guid categoryId)
         {
             return await _context.Products.AsNoTracking()
-                                          .Where(p => p.Category == category)
+                                          .Where(p => p.Category.Id == categoryId)
                                           .ToListAsync();
         }
 

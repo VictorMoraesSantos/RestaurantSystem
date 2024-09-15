@@ -1,4 +1,6 @@
-﻿using Catalog.Domain.Repositories;
+﻿using Catalog.Application.Interfaces;
+using Catalog.Application.Services;
+using Catalog.Domain.Repositories;
 using Catalog.Infra.Data.Data;
 using Catalog.Infra.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +18,10 @@ namespace Catalog.Infra.IoC
                 options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
+
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<ICategoryService, CategoryService>();
 
             return services;
         }
